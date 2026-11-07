@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="Mumin Downloader - A modern media downloader interface by Mumin IT Solutions.">
+<title>Mumin Downloader - Mumin IT Solutions</title>
+<style>
+:root{--bg:#f4f7fc;--surface:#fff;--text:#172033;--muted:#748096;--primary:#2563eb;--border:#e5eaf2;--shadow:0 15px 45px rgba(25,45,85,.09)}
+body.dark{--bg:#0c1220;--surface:#151e30;--text:#f3f6ff;--muted:#a0acc2;--primary:#6595ff;--border:#29354a;--shadow:0 15px 45px rgba(0,0,0,.2)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:.25s}
+button,input{font:inherit}button{cursor:pointer}
+header{height:76px;display:flex;justify-content:space-between;align-items:center;padding:0 7%;background:var(--surface);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:11px}
+.logo-icon{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:white;font-size:22px;font-weight:bold}
+.logo h2{font-size:19px}.logo small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.header-actions{display:flex;gap:10px}
+.icon-btn{width:42px;height:42px;border:1px solid var(--border);border-radius:12px;color:var(--text);background:var(--surface);font-size:18px}
+main{width:min(900px,91%);margin:55px auto 70px}
+.hero{text-align:center;margin-bottom:34px}
+.hero-label{display:inline-block;background:rgba(37,99,235,.10);color:var(--primary);border-radius:30px;padding:9px 16px;font-size:12px;font-weight:bold;letter-spacing:1px;margin-bottom:20px}
+.hero h1{font-size:clamp(34px,7vw,57px);line-height:1.13;letter-spacing:-2px}
+.hero h1 span{background:linear-gradient(90deg,#2563eb,#9333ea);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:530px;margin:16px auto;line-height:1.7;color:var(--muted);font-size:15px}
+.download-card{background:var(--surface);border:1px solid var(--border);border-radius:23px;padding:clamp(20px,5vw,36px);box-shadow:var(--shadow)}
+.card-heading{font-size:19px;margin-bottom:9px}.card-subtitle{color:var(--muted);font-size:13px;margin-bottom:22px}
+.input-box{display:flex;align-items:center;border:2px solid var(--border);border-radius:14px;padding:6px;transition:.2s;background:var(--bg)}
+.input-box:focus-within{border-color:var(--primary)}
+.input-box input{flex:1;min-width:0;padding:14px 12px;border:0;outline:0;background:transparent;color:var(--text);font-size:14px}
+.paste-btn{border:0;border-radius:10px;padding:12px 15px;background:var(--surface);color:var(--primary);font-weight:bold;font-size:12px}
+.main-btn{width:100%;border:0;border-radius:13px;margin-top:15px;padding:16px;color:white;font-size:15px;font-weight:bold;background:linear-gradient(100deg,#2563eb,#7142dc);box-shadow:0 7px 20px rgba(37,99,235,.2);transition:.2s}
+.main-btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.status{display:none;padding:14px;margin-top:18px;border-radius:12px;font-size:13px;line-height:1.6;background:rgba(37,99,235,.08);color:var(--text)}
+.status.show{display:block}
+.formats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:25px}
+.format{border:1px solid var(--border);border-radius:15px;padding:18px;background:var(--surface);text-align:left}
+.format-icon{font-size:25px;margin-bottom:10px}.format h3{font-size:16px;margin-bottom:6px}
+.format p{font-size:12px;color:var(--muted);line-height:1.5}
+.format button{width:100%;margin-top:15px;padding:11px;border-radius:9px;border:1px solid var(--border);color:var(--primary);background:var(--bg);font-weight:bold}
+.format button:disabled{opacity:.4;cursor:not-allowed}
+.platforms{margin-top:38px;text-align:center}.platforms h3{font-size:16px;margin-bottom:18px}
+.platform-list{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+.platform{background:var(--surface);border:1px solid var(--border);padding:11px 16px;border-radius:12px;font-size:13px;color:var(--text)}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:42px}
+.feature{text-align:center;padding:20px 12px;border:1px solid var(--border);background:var(--surface);border-radius:15px}
+.feature span{font-size:24px}.feature h4{margin:10px 0 7px;font-size:14px}
+.feature p{font-size:11px;line-height:1.6;color:var(--muted)}
+footer{text-align:center;padding:28px 15px;border-top:1px solid var(--border);background:var(--surface)}
+footer p{font-size:12px;color:var(--muted);line-height:1.9}footer strong{color:var(--primary)}
+@media(max-width:600px){header{padding:0 5%;height:67px}main{margin:38px auto 50px}.hero h1{letter-spacing:-1px}.formats{gap:9px}.format{padding:13px}.features{grid-template-columns:1fr}.input-box input{font-size:12px}.paste-btn{padding:11px 9px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <div class="logo-icon">M</div>
+    <div><h2>Mumin Downloader</h2><small>BY MUMIN IT SOLUTIONS</small></div>
+  </div>
+  <div class="header-actions"><button class="icon-btn" id="themeBtn" aria-label="Toggle theme">🌙</button></div>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-label">✦ SIMPLE • FAST • MODERN</div>
+    <h1>Download Your <span>Media</span></h1>
+    <p>Paste your media link and explore available download options in one simple place.</p>
+  </section>
+  <section class="download-card">
+    <h2 class="card-heading">Paste Your Video Link</h2>
+    <p class="card-subtitle">Enter a media URL to get started.</p>
+    <div class="input-box">
+      <input id="urlInput" type="url" placeholder="Paste your video or media URL here..." autocomplete="url">
+      <button class="paste-btn" id="pasteBtn">📋 Paste</button>
+    </div>
+    <button class="main-btn" id="analyzeBtn">Get Download Options →</button>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="formats">
+      <div class="format"><div class="format-icon">🎬</div><h3>MP4 Video</h3><p>Download supported direct video files.</p><button id="mp4Btn" disabled>Download MP4</button></div>
+      <div class="format"><div class="format-icon">🎵</div><h3>MP3 Audio</h3><p>Download supported direct audio files.</p><button id="mp3Btn" disabled>Download MP3</button></div>
+    </div>
+  </section>
+  <section class="platforms">
+    <h3>Popular Platforms</h3>
+    <div class="platform-list">
+      <div class="platform">▶ YouTube</div><div class="platform">📘 Facebook</div>
+      <div class="platform">📸 Instagram</div><div class="platform">♪ TikTok</div><div class="platform">𝕏 X</div>
+    </div>
+  </section>
+  <section class="features">
+    <div class="feature"><span>⚡</span><h4>Simple Experience</h4><p>Easy-to-use interface for everyone.</p></div>
+    <div class="feature"><span>📱</span><h4>Mobile Friendly</h4><p>Works with mobile and desktop layouts.</p></div>
+    <div class="feature"><span>🔒</span><h4>Privacy Focused</h4><p>No account required for this interface.</p></div>
+  </section>
+</main>
+<footer>
+  <p>© <span id="year"></span> <strong>Mumin Downloader</strong></p>
+  <p>Developed with ❤️ by <strong>Mumin IT Solutions</strong></p>
+  <p>Only download media you own or have permission to use.</p>
+</footer>
+<script>
+const input=document.getElementById("urlInput");
+const statusBox=document.getElementById("status");
+const mp4Btn=document.getElementById("mp4Btn");
+const mp3Btn=document.getElementById("mp3Btn");
+document.getElementById("year").textContent=new Date().getFullYear();
+document.getElementById("themeBtn").addEventListener("click",()=>{
+  document.body.classList.toggle("dark");
+  document.getElementById("themeBtn").textContent=document.body.classList.contains("dark")?"☀️":"🌙";
+});
+function showStatus(message){statusBox.innerHTML=message;statusBox.classList.add("show")}
+function resetButtons(){mp4Btn.disabled=true;mp3Btn.disabled=true;mediaUrl="";mediaType=""}
+let mediaUrl="",mediaType="";
+document.getElementById("pasteBtn").addEventListener("click",async()=>{
+  try{input.value=await navigator.clipboard.readText();showStatus("Link pasted. Click Get Download Options.");}
+  catch(e){showStatus("Please paste your link into the input box manually.");}
+});
+function detectPlatform(host){
+  if(host.includes("youtube.com")||host==="youtu.be")return "YouTube";
+  if(host.includes("facebook.com")||host==="fb.watch")return "Facebook";
+  if(host.includes("instagram.com"))return "Instagram";
+  if(host.includes("tiktok.com"))return "TikTok";
+  if(host.includes("x.com")||host.includes("twitter.com"))return "X";
+  return "Unknown";
+}
+document.getElementById("analyzeBtn").addEventListener("click",()=>{
+  resetButtons();
+  const raw=input.value.trim();
+  if(!raw){showStatus("⚠️ Please enter a media URL first.");return;}
+  let parsed;
+  try{parsed=new URL(raw);if(!["http:","https:"].includes(parsed.protocol))throw new Error("Invalid protocol");}
+  catch(e){showStatus("⚠️ Please enter a valid HTTP or HTTPS link.");return;}
+  mediaUrl=parsed.href;
+  const platform=detectPlatform(parsed.hostname.toLowerCase());
+  const path=parsed.pathname.toLowerCase();
+  if(platform!=="Unknown"){
+    showStatus("🔎 Platform detected: <strong>"+platform+"</strong><br><br>This platform requires an authorized downloader API or backend. This frontend does not extract or bypass protected media streams.");
+    return;
+  }
+  if(/\.(mp4|webm|mov|m4v)$/i.test(path)){
+    mediaType="video";mp4Btn.disabled=false;
+    showStatus("✅ Direct video link detected. MP4 download may be available depending on server permissions.");
+  }else if(/\.(mp3|m4a|wav|ogg|aac|flac)$/i.test(path)){
+    mediaType="audio";mp3Btn.disabled=false;
+    showStatus("✅ Direct audio link detected. You can download the original audio file.");
+  }else{
+    showStatus("ℹ️ This URL is not a recognized direct media file. A compatible media URL or an authorized platform integration is required.");
+  }
+});
+function downloadDirect(url,filename){
+  const link=document.createElement("a");link.href=url;link.download=filename;
+  link.target="_blank";link.rel="noopener noreferrer";
+  document.body.appendChild(link);link.click();link.remove();
+}
+mp4Btn.addEventListener("click",()=>{if(mediaType==="video"&&mediaUrl)downloadDirect(mediaUrl,"mumin-video.mp4");});
+mp3Btn.addEventListener("click",()=>{if(mediaType==="audio"&&mediaUrl)downloadDirect(mediaUrl,"mumin-audio");});
+input.addEventListener("input",resetButtons);
+</script>
+</body>
+</html>
